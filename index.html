@@ -1,11 +1,132 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <title>Analisis Penjualan Laptop 2024</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    h1, h2 {
+      color: #2c3e50;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    th {
+      background-color: #2980b9;
+      color: white;
+    }
+    .chart-container {
+      width: 80%;
+      margin: auto;
+    }
+  </style>
 </head>
 <body>
-    <p>helo word</p>
+
+  <h1>Analisis Penjualan Laptop di Indonesia Tahun 2024</h1>
+
+  <h2>Tabel Penjualan Laptop per Kuartal</h2>
+  <table>
+    <tr>
+      <th>Kuartal</th>
+      <th>Jumlah Unit Terjual</th>
+      <th>Merek Terlaris</th>
+      <th>Rata-rata Harga (Rp)</th>
+      <th>Saluran Distribusi Utama</th>
+    </tr>
+    <tr>
+      <td>Q1</td>
+      <td>210.000</td>
+      <td>ASUS</td>
+      <td>8.500.000</td>
+      <td>Marketplace</td>
+    </tr>
+    <tr>
+      <td>Q2</td>
+      <td>250.000</td>
+      <td>Lenovo</td>
+      <td>8.750.000</td>
+      <td>Toko Offline + Marketplace</td>
+    </tr>
+    <tr>
+      <td>Q3</td>
+      <td>280.000</td>
+      <td>HP</td>
+      <td>9.000.000</td>
+      <td>Toko Offline</td>
+    </tr>
+    <tr>
+      <td>Q4</td>
+      <td>300.000</td>
+      <td>Acer</td>
+      <td>8.900.000</td>
+      <td>E-commerce</td>
+    </tr>
+  </table>
+
+  <div class="chart-container">
+    <h2>Grafik Penjualan Laptop per Kuartal (2024)</h2>
+    <canvas id="penjualanChart"></canvas>
+  </div>
+
+  <div class="chart-container">
+    <h2>Pangsa Pasar Merek Laptop</h2>
+    <canvas id="pieChart"></canvas>
+  </div>
+
+  <script>
+    // Bar Chart - Penjualan per Kuartal
+    const ctx = document.getElementById('penjualanChart').getContext('2d');
+    const penjualanChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+        datasets: [{
+          label: 'Unit Terjual (x1000)',
+          data: [210, 250, 280, 300],
+          backgroundColor: ['#3498db', '#1abc9c', '#f1c40f', '#e74c3c']
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Pie Chart - Pangsa Pasar Merek
+    const ctx2 = document.getElementById('pieChart').getContext('2d');
+    const pieChart = new Chart(ctx2, {
+      type: 'pie',
+      data: {
+        labels: ['ASUS', 'Lenovo', 'HP', 'Acer', 'Lainnya'],
+        datasets: [{
+          label: 'Persentase',
+          data: [26, 24, 20, 18, 12],
+          backgroundColor: ['#2ecc71', '#3498db', '#e67e22', '#9b59b6', '#95a5a6']
+        }]
+      },
+      options: {
+        responsive: true
+      }
+    });
+  </script>
+
 </body>
 </html>
