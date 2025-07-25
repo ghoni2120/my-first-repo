@@ -2,131 +2,110 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Analisis Penjualan Laptop 2024</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 30px;
-      background-color: #f4f4f4;
-      color: #333;
-    }
-    h1, h2 {
-      color: #2c3e50;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 30px;
-    }
-    th, td {
-      padding: 10px;
-      border: 1px solid #ccc;
-      text-align: center;
-    }
-    th {
-      background-color: #2980b9;
-      color: white;
-    }
-    .chart-container {
-      width: 80%;
-      margin: auto;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generator Pengelolaan Keuangan</title>
+  <script src="https://cdn.jsdelivr.net/npm/docx@7.7.0/build/index.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white min-h-screen font-sans">
+  <div class="container mx-auto px-4 py-10 animate-fade-in">
+    <h1 class="text-4xl font-bold text-center mb-8">Generator Pengelolaan Keuangan</h1>
 
-  <h1>Analisis Penjualan Laptop di Indonesia Tahun 2024</h1>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="space-y-4">
+        <label class="block">
+          <span class="text-lg">Masukkan Pemasukan:</span>
+          <input type="number" id="pemasukan" class="w-full px-4 py-2 rounded bg-gray-700 border border-gray-600 focus:outline-none" placeholder="Contoh: 1000000">
+        </label>
 
-  <h2>Tabel Penjualan Laptop per Kuartal</h2>
-  <table>
-    <tr>
-      <th>Kuartal</th>
-      <th>Jumlah Unit Terjual</th>
-      <th>Merek Terlaris</th>
-      <th>Rata-rata Harga (Rp)</th>
-      <th>Saluran Distribusi Utama</th>
-    </tr>
-    <tr>
-      <td>Q1</td>
-      <td>210.000</td>
-      <td>ASUS</td>
-      <td>8.500.000</td>
-      <td>Marketplace</td>
-    </tr>
-    <tr>
-      <td>Q2</td>
-      <td>250.000</td>
-      <td>Lenovo</td>
-      <td>8.750.000</td>
-      <td>Toko Offline + Marketplace</td>
-    </tr>
-    <tr>
-      <td>Q3</td>
-      <td>280.000</td>
-      <td>HP</td>
-      <td>9.000.000</td>
-      <td>Toko Offline</td>
-    </tr>
-    <tr>
-      <td>Q4</td>
-      <td>300.000</td>
-      <td>Acer</td>
-      <td>8.900.000</td>
-      <td>E-commerce</td>
-    </tr>
-  </table>
+        <label class="block">
+          <span class="text-lg">Masukkan Pengeluaran:</span>
+          <input type="number" id="pengeluaran" class="w-full px-4 py-2 rounded bg-gray-700 border border-gray-600 focus:outline-none" placeholder="Contoh: 500000">
+        </label>
 
-  <div class="chart-container">
-    <h2>Grafik Penjualan Laptop per Kuartal (2024)</h2>
-    <canvas id="penjualanChart"></canvas>
-  </div>
+        <label class="block">
+          <span class="text-lg">Pilih Tipe Pengelolaan:</span>
+          <select id="tipe" class="w-full px-4 py-2 rounded bg-gray-700 border border-gray-600">
+            <option value="harian">Harian</option>
+            <option value="mingguan">Mingguan</option>
+            <option value="bulanan">Bulanan</option>
+          </select>
+        </label>
 
-  <div class="chart-container">
-    <h2>Pangsa Pasar Merek Laptop</h2>
-    <canvas id="pieChart"></canvas>
+        <button onclick="generateKeuangan()" class="bg-blue-500 hover:bg-blue-600 transition px-6 py-3 rounded-full text-white font-semibold w-full mt-4 flex items-center justify-center">
+          <i class="fas fa-robot mr-2"></i> Masukkan Jumlah Uang!
+        </button>
+
+        <div id="loading" class="hidden mt-4 text-center">
+          <i class="fas fa-spinner fa-spin text-xl text-blue-400"></i>
+          <p>Memproses data Anda...</p>
+        </div>
+      </div>
+
+      <div id="hasil" class="space-y-4"></div>
+    </div>
   </div>
 
   <script>
-    // Bar Chart - Penjualan per Kuartal
-    const ctx = document.getElementById('penjualanChart').getContext('2d');
-    const penjualanChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Q1', 'Q2', 'Q3', 'Q4'],
-        datasets: [{
-          label: 'Unit Terjual (x1000)',
-          data: [210, 250, 280, 300],
-          backgroundColor: ['#3498db', '#1abc9c', '#f1c40f', '#e74c3c']
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
+    function generateKeuangan() {
+      const pemasukan = parseInt(document.getElementById("pemasukan").value);
+      const pengeluaran = parseInt(document.getElementById("pengeluaran").value);
+      const tipe = document.getElementById("tipe").value;
 
-    // Pie Chart - Pangsa Pasar Merek
-    const ctx2 = document.getElementById('pieChart').getContext('2d');
-    const pieChart = new Chart(ctx2, {
-      type: 'pie',
-      data: {
-        labels: ['ASUS', 'Lenovo', 'HP', 'Acer', 'Lainnya'],
-        datasets: [{
-          label: 'Persentase',
-          data: [26, 24, 20, 18, 12],
-          backgroundColor: ['#2ecc71', '#3498db', '#e67e22', '#9b59b6', '#95a5a6']
-        }]
-      },
-      options: {
-        responsive: true
+      if (isNaN(pemasukan) || isNaN(pengeluaran)) {
+        alert("Mohon masukkan nilai pemasukan dan pengeluaran dengan benar.");
+        return;
       }
-    });
+
+      const hasil = pemasukan - pengeluaran;
+      const hasilElement = document.getElementById("hasil");
+      const loading = document.getElementById("loading");
+
+      hasilElement.innerHTML = "";
+      loading.classList.remove("hidden");
+
+      setTimeout(() => {
+        loading.classList.add("hidden");
+        hasilElement.innerHTML = `
+          <div class='bg-gray-800 p-6 rounded-lg shadow-xl space-y-4'>
+            <h2 class='text-2xl font-bold'>Ringkasan Keuangan ${tipe}</h2>
+            <p><strong>Pemasukan:</strong> Rp ${pemasukan.toLocaleString()}</p>
+            <p><strong>Pengeluaran:</strong> Rp ${pengeluaran.toLocaleString()}</p>
+            <p><strong>Sisa Uang:</strong> Rp ${hasil.toLocaleString()}</p>
+            <div class="flex space-x-4">
+              <button onclick="salinKeClipboard(${pemasukan}, ${pengeluaran}, ${hasil}, '${tipe}')" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-full">Salin</button>
+              <button onclick="exportKeWord(${pemasukan}, ${pengeluaran}, ${hasil}, '${tipe}')" class="bg-purple-500 hover:bg-purple-600 px-4 py-2 rounded-full">Export ke Word</button>
+            </div>
+          </div>`;
+      }, 1000);
+    }
+
+    function salinKeClipboard(pemasukan, pengeluaran, hasil, tipe) {
+      const text = `Pengelolaan Keuangan ${tipe}\nPemasukan: Rp ${pemasukan.toLocaleString()}\nPengeluaran: Rp ${pengeluaran.toLocaleString()}\nSisa Uang: Rp ${hasil.toLocaleString()}`;
+      navigator.clipboard.writeText(text).then(() => alert("Disalin ke clipboard!"));
+    }
+
+    async function exportKeWord(pemasukan, pengeluaran, hasil, tipe) {
+      const { Document, Packer, Paragraph, TextRun } = window.docx;
+      const doc = new Document({
+        sections: [{
+          children: [
+            new Paragraph({ children: [new TextRun({ text: `Ringkasan Keuangan ${tipe}`, bold: true, size: 28 })] }),
+            new Paragraph(`Pemasukan: Rp ${pemasukan.toLocaleString()}`),
+            new Paragraph(`Pengeluaran: Rp ${pengeluaran.toLocaleString()}`),
+            new Paragraph(`Sisa Uang: Rp ${hasil.toLocaleString()}`)
+          ]
+        }]
+      });
+      const blob = await Packer.toBlob(doc);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `Ringkasan_Keuangan_${tipe}.docx`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
   </script>
-
 </body>
 </html>
